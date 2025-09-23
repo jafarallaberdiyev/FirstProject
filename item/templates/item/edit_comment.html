@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Edit Comment{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto mt-10 bg-gray-100 text-gray-900 p-6 rounded-xl shadow">
+    <h2 class="text-2xl font-bold mb-4">Edit Comment</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="mb-4">
+            {{ form.content.label_tag }}
+            {{ form.content }}
+            {{ form.content.errors }}
+        </div>
+
+        <button type="submit" class="mt-4 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded">Save</button>
+        <a href="{% url 'item:detail' comment.item.pk %}" class="ml-4 text-gray-600 hover:underline">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{% block title %}{% endblock %} | Puddle</title>
+</head>
+
+<body>
+<nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
+    <a href="/" class="text-xl font-semibold">Puddle</a>
+
+    <div class="space-x-6 flex items-center">
+        <a href="{% url 'item:new' %}" class="text-lg font-semibold hover:text-gray-500">New item</a>
+        <a href="{% url 'item:items' %}" class="text-lg font-semibold hover:text-gray-500">Browse</a>
+
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'conversation:inbox' %}"
+           class="px-4 py-2 text-sm font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Inbox</a>
+        <a href="{% url 'dashboard:index' %}"
+           class="px-4 py-2 text-sm font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
+
+        <!-- Profile dropdown -->
+        <div class="relative inline-block text-left">
+            <button onclick="toggleDropdown()" type="button"
+                    class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md hover:bg-gray-800"
+                    id="menu-button" aria-expanded="true" aria-haspopup="true">
+                Hey {{ request.user.username }}
+                <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdownMenu"
+                 class="hidden absolute right-0 z-[9999] mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+
+                <div class="py-1">
+                    <a href="{% url 'core:profile' %}"
+                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+
+                    <form method="post" action="{% url 'core:logout' %}">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-red-100">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <a href="{% url 'core:signup' %}"
+           class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign up</a>
+        <a href="{% url 'core:login' %}"
+           class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log in</a>
+        {% endif %}
+    </div>
+</nav>
+
+<script>
+    function toggleDropdown() {
+        const menu = document.getElementById('dropdownMenu');
+        menu.classList.toggle('hidden');
+    }
+
+    // Optional: close dropdown on outside click
+    window.addEventListener('click', function (e) {
+        const button = document.getElementById('menu-button');
+        const menu = document.getElementById('dropdownMenu');
+
+        if (!button.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.add('hidden');
+        }
+    });
+</script>
+
+<!-- Page Content -->
+<div class="px-6 py-6">
+    {% block content %}{% endblock %}
+</div>
+
+<footer class="py-6 px-6 flex justify-between bg-gray-800">
+    <div class="w-2/3 pr-10">
+        <h3 class="mb-5 font-semibold text-gray-400">About</h3>
+        <p class="text-lg text-gray-500">Lorem ipsum bla bla bla. Lorem ipsum bla bla bla.</p>
+    </div>
+
+    <div class="w-1/3">
+        <h3 class="mb-5 font-semibold text-gray-400">Menu</h3>
+        <ul class="space-y-2">
+            <li><a href="{% url 'core:about' %}" class="text-lg text-teal-500 hover:text-teal-700">About</a></li>
+            <li><a href="{% url 'core:contact' %}" class="text-lg text-teal-500 hover:text-teal-700">Contact</a></li>
+            <li><a href="{% url 'core:privacy' %}" class="text-lg text-teal-500 hover:text-teal-700">Privacy policy</a>
+            </li>
+            <li><a href="{% url 'core:terms' %}" class="text-lg text-teal-500 hover:text-teal-700">Terms of use</a></li>
+        </ul>
+    </div>
+</footer>
+</body>
+</html>

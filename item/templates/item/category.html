@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% block title %}Items in {{ category.name }}{% endblock %}
+
+{% block content %}
+<!-- Category navigation bar -->
+<div class="w-full sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200 mb-10">
+    <div class="container mx-auto px-6 py-4 overflow-x-auto whitespace-nowrap flex gap-10">
+        {% for cat in categories %}
+            <a href="{% url 'item:category' cat.id %}"
+               class="text-gray-800 hover:text-black text-lg font-bold shrink-0 transition-all duration-200 {% if cat.id == category.id %}underline text-black{% endif %}">
+                {{ cat.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Items in selected category -->
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Items in {{ category.name }}</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for item in items %}
+            <div>
+                <a href="{% url 'item:detail' item.id %}">
+                    <div>
+                        <img src="{{ item.image.url }}"
+                             class="rounded-t-xl w-full h-64 object-contain bg-white p-2"
+                             alt="{{ item.name }}">
+                    </div>
+
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2xl">{{ item.name }}</h2>
+                        <p class="text-gray-500">{{ item.price }} UZS</p>
+                    </div>
+                </a>
+            </div>
+        {% empty %}
+            <p class="text-center text-gray-600">No items found in this category.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

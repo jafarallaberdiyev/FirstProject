@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+
+<div class="w-full sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
+    <div class="container mx-auto px-6 py-4 overflow-x-auto whitespace-nowrap flex gap-10">
+        {% for category in categories %}
+            <a href="{% url 'item:category' category.id %}"
+               class="text-gray-800 hover:text-black text-lg font-bold shrink-0 transition-all duration-200">
+                {{ category.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Newest items -->
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center font-semibold">Newest items</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for item in items %}
+            <div class="bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition">
+                <a href="{% url 'item:detail' item.id %}">
+                    <img src="{{ item.image.url }}" class="w-full h-64 object-contain bg-white p-4" alt="{{ item.name }}">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold mb-2">{{ item.name }}</h2>
+                        <p class="text-gray-500">Price: {{ item.price }} UZS</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
