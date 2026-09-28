@@ -1,23 +1,33 @@
-# FirstProject — Django Backend
+# FirstProject — Django Marketplace Backend
 
-Short: A simple Django backend with items/dashboard and conversation apps, media uploads, and ready-to-extend REST API.
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-5.x-092E20?logo=django&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+A Django backend with an items dashboard and a conversation (messaging) app: item CRUD with image uploads, threaded comments, and authentication.
 
 ## Features
-- Items CRUD (admin + forms)
-- Media upload (`media/item_images/`)
-- Auth (Django admin, login required for dashboard pages)
-- (Optional) DRF endpoints for Items/Conversations
 
-## Tech Stack
-- Python 3.10+
-- Django 5.x
-- SQLite (dev), ready for Postgres in prod
-- Templates (HTML), static & media handling
+- 📦 Items CRUD with categories (admin + forms)
+- 🖼️ Image uploads (`media/item_images/`)
+- 💬 Conversations between users about an item
+- 🗨️ Comments with replies
+- 🔐 Auth: login required for dashboard pages
 
-## Project Structure
-├─ core/ # settings, urls, wsgi/asgi
-├─ item/ # item app: models, views, templates
-├─ dashboard/ # dashboard pages
-├─ conversation/ # conversation app
-├─ media/item_images/
-├─ manage.py
+## Tech stack
+
+Python 3.10+ · Django 5.x · SQLite (dev) · HTML templates · Pillow
+
+## Project structure
+
+```
+core/          # home page, signup/login forms
+item/          # items, categories, comments
+dashboard/     # the user's own items
+conversation/  # messages between buyer and seller
+media/         # uploaded images
+```
+
+## License
+
+[MIT](LICENSE)
