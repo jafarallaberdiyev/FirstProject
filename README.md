@@ -18,9 +18,30 @@ A Django backend with an items dashboard and a conversation (messaging) app: ite
 
 Python 3.10+ · Django 5.x · SQLite (dev) · HTML templates · Pillow
 
+## Getting started
+
+```bash
+git clone https://github.com/jafarallaberdiyev/FirstProject.git
+cd FirstProject
+
+python -m venv venv
+venv\Scripts\activate          # Windows
+# source venv/bin/activate     # macOS / Linux
+
+pip install -r requirements.txt
+cp .env.example .env           # then set your own SECRET_KEY
+
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
+
+Open http://127.0.0.1:8000/. Add categories in the admin at `/admin/`, then create items from the dashboard.
+
 ## Project structure
 
 ```
+firstproject/  # settings, root URLs, WSGI/ASGI
 core/          # home page, signup/login forms
 item/          # items, categories, comments
 dashboard/     # the user's own items
